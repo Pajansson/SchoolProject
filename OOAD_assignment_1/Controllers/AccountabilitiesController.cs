@@ -68,6 +68,16 @@ namespace OOAD_assignment_1.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (accountability.AccountableId == accountability.CommissionerId)
+                {
+                    return RedirectToAction(nameof(Create));
+                }
+
+                if (await _context.Accountabilities.SingleOrDefaultAsync(x => x == accountability) != null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
                 _context.Add(accountability);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

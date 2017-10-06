@@ -17,7 +17,7 @@ namespace OOAD_assignment_1.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Accountability>().HasKey(a => new { a.AccountableId, a.CommissionerId });
+            builder.Entity<Accountability>().HasKey(a => new { a.AccountableId, a.CommissionerId, a.AccountabilityTypeId });
 
             base.OnModelCreating(builder);
             // Customize the ASP.NET Identity model and override the defaults if needed.
