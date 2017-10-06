@@ -37,12 +37,12 @@
                 @Html.DisplayFor(modelItem => item.Commissioner.Name)
             </td>
             <td>
-                <a asp-action="Edit" 
+                @*<a asp-action="Edit" 
                    asp-route-accountableId="@item.AccountableId" 
                    asp-route-typeId="@item.AccountabilityTypeId" 
                    asp-route-commisionerId="@item.CommissionerId">
                     Edit
-                </a>
+                </a>*@
                 @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { id=item.AccountabilityTypeId}) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
