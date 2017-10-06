@@ -1,0 +1,47 @@
+﻿@model IEnumerable<OOAD_assignment_1.Models.Accountability>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountabilityType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accountable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commissioner)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountabilityType.AccountabilityTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accountable.PartyId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commissioner.PartyId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

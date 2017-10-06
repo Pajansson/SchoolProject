@@ -1,0 +1,40 @@
+﻿@model OOAD_assignment_1.Models.Accountability
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Accountability</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CommissionerId" class="control-label"></label>
+                <select asp-for="CommissionerId" class ="form-control" asp-items="ViewBag.CommissionerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountableId" class="control-label"></label>
+                <select asp-for="AccountableId" class ="form-control" asp-items="ViewBag.AccountableId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountabilityTypeId" class="control-label"></label>
+                <select asp-for="AccountabilityTypeId" class ="form-control" asp-items="ViewBag.AccountabilityTypeId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
