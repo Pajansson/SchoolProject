@@ -17,7 +17,14 @@
             @Html.DisplayFor(model => model.Party.Name)
         </dd>
     </dl>
+
     <table>
+        <thead>
+        <tr>
+            <th>Commisioner:</th>
+            <th>Accountable:</th>
+        </tr>
+        </thead>
         @foreach (var acc in Model.Accountabilities)
         {
             <tr>
@@ -28,7 +35,7 @@
                     @acc.Commissioner.Name
                 </td>
             </tr>
-            
+
         }
     </table>
 </div>
