@@ -50,8 +50,8 @@ namespace OOAD_assignment_1.Controllers
         // GET: Accountabilities/Create
         public IActionResult Create()
         {
-            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "AccountabilityTypeId");
-            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "PartyId");
+            ViewData["Description"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "Description");
+            ViewData["Name"] = new SelectList(_context.Parties, "PartyId", "Name");
             ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "PartyId");
             return View();
         }

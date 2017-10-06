@@ -67,7 +67,7 @@ namespace OOAD_assignment_1
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Accountabilities}/{action=Create}/{id?}");
             });
 
             DbInitialiser.MigrateNorthwindData(oldContext, context);
