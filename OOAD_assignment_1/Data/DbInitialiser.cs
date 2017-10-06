@@ -10,13 +10,14 @@ namespace OOAD_assignment_1.Data
     {
         public static void MigrateNorthwindData(NORTHWNDContext oldContext, ApplicationDbContext newContext)
         {
+            AccountabilityType customerType = new AccountabilityType { Description = "Customers" };
+            AccountabilityType employeeType = new AccountabilityType { Description = "Employees" };
+            AccountabilityType shipperType = new AccountabilityType { Description = "Shippers" };
+            AccountabilityType supplierType = new AccountabilityType { Description = "Suppliers" };
+
             if (!newContext.AccountabilityTypes.Any())
             {
                 //accountabilitytypes
-                AccountabilityType customerType = new AccountabilityType { Description = "Customers" };
-                AccountabilityType employeeType = new AccountabilityType { Description = "Employees" };
-                AccountabilityType shipperType = new AccountabilityType { Description = "Shippers" };
-                AccountabilityType supplierType = new AccountabilityType { Description = "Suppliers" };
                 newContext.AccountabilityTypes.Add(customerType);
                 newContext.AccountabilityTypes.Add(employeeType);
                 newContext.AccountabilityTypes.Add(shipperType);
