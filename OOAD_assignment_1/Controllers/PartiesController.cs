@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OOAD_assignment_1.Data;
 using OOAD_assignment_1.Models;
+using OOAD_assignment_1.ViewModels;
 
 namespace OOAD_assignment_1.Controllers
 {
@@ -25,6 +27,15 @@ namespace OOAD_assignment_1.Controllers
             return View(await _context.Parties.ToListAsync());
         }
 
+        public List<Accountability> GetAccountabilities(int ?id)
+        {
+            var accountabilities = _context.Accountabilities.Where(x => x.CommissionerId == id || x.AccountableId == id)
+                .Include(x => x.Accountable)
+                .Include(x => x.Commissioner);
+
+            return accountabilities.ToList();
+        }
+    
         // GET: Parties/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -32,15 +43,20 @@ namespace OOAD_assignment_1.Controllers
             {
                 return NotFound();
             }
+            var partyVm = new PartyDetailsViewModel
+            {
+                Party = await _context.Parties
+                    .SingleOrDefaultAsync(m => m.PartyId == id),
+                Accountabilities = GetAccountabilities(id)
+            };
 
-            var party = await _context.Parties
-                .SingleOrDefaultAsync(m => m.PartyId == id);
-            if (party == null)
+
+            if (partyVm.Party == null)
             {
                 return NotFound();
             }
 
-            return View(party);
+            return View(partyVm);
         }
 
         // GET: Parties/Create
