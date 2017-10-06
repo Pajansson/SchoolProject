@@ -1,0 +1,36 @@
+﻿@model OOAD_assignment_1.Models.Accountability
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Accountability</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountabilityType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AccountabilityType.AccountabilityTypeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Accountable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Accountable.PartyId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Commissioner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Commissioner.PartyId)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
