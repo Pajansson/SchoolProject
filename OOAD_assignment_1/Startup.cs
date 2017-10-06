@@ -35,8 +35,6 @@ namespace OOAD_assignment_1
                 options.UseInMemoryDatabase(Configuration.GetConnectionString("NewNorthwindConnection")));
             //
 
-
-
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
