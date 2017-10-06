@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace OOAD_assignment_1.Services
 {
-    public class ITimeProvider
+    public interface ITimeProvider
     {
-        public DateTime GetDateTime()
-        {
-            return DateTime.Now;
-        }
+        void TimeWarp();
+        void ResetTime();
     }
 }

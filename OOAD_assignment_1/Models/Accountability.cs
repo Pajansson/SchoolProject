@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace OOAD_assignment_1.Models
 {
@@ -7,8 +8,11 @@ namespace OOAD_assignment_1.Models
         public int CommissionerId { get; set; }
         public int AccountableId { get; set; }
         public int AccountabilityTypeId { get; set; }
+        public int? TimePeriodId { get; set; }
+
         public virtual Party Commissioner { get; set; }
         public virtual Party Accountable { get; set; }
         public virtual AccountabilityType AccountabilityType { get; set; }
+        public virtual TimePeriod TimePeriods { get; set; }
     }
 }
