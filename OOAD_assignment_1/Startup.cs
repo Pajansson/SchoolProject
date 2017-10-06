@@ -30,7 +30,7 @@ namespace OOAD_assignment_1
                 options.UseSqlServer(Configuration.GetConnectionString("OldNorthwindConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase(Configuration.GetConnectionString("NewNorthwindConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("NewNorthwindConnection")));
             //
 
 
