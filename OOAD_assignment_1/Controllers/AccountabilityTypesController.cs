@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OOAD_assignment_1.Data;
 using OOAD_assignment_1.Models;
+using OOAD_assignment_1.Models.AccountabilityTypesViewModels;
 
 namespace OOAD_assignment_1.Controllers
 {
@@ -131,7 +129,15 @@ namespace OOAD_assignment_1.Controllers
                 return NotFound();
             }
 
-            return View(accountabilityType);
+            DeleteViewModel vm = new DeleteViewModel() { AccountabilityType = accountabilityType };
+            vm.AffectedAccountabilities = await _context.Accountabilities.Where(x =>
+                x.AccountabilityTypeId == accountabilityType.AccountabilityTypeId)
+                .Include(x => x.Accountable)
+                .Include(x => x.Commissioner)
+                .ToListAsync();
+            vm.CanDelete = vm.AffectedAccountabilities.Count < 1;
+
+            return View(vm);
         }
 
         // POST: AccountabilityTypes/Delete/5
