@@ -10,68 +10,56 @@ namespace OOAD_assignment_1.Data
     {
         public static void MigrateNorthwindData(NORTHWNDContext oldContext, ApplicationDbContext newContext)
         {
-            Party northwind = new Party() { Name = "Northwind" };
-            newContext.Parties.Add(northwind);
-            newContext.SaveChanges();
-
-            //accountabilitytypes
-            var customerType = new AccountabilityType
+            if (!newContext.AccountabilityTypes.Any())
             {
-                Description = "Customers"
-            };
-            var employeeType = new AccountabilityType
-            {
-                Description = "Employees"
-            };
-            var shipperType = new AccountabilityType
-            {
-                Description = "Shippers"
-            };
-            var supplierType = new AccountabilityType
-            {
-                Description = "Suppliers"
-            };
-            newContext.AccountabilityTypes.Add(customerType);
-            newContext.AccountabilityTypes.Add(employeeType);
-            newContext.AccountabilityTypes.Add(shipperType);
-            newContext.AccountabilityTypes.Add(supplierType);
-            newContext.SaveChanges();
-
-
-            List<Shippers> shippers = oldContext.Shippers.ToList();
-            List<Customers> customers = oldContext.Customers.ToList();
-            List<Suppliers> suppliers = oldContext.Suppliers.ToList();
-            List<Employees> employees = oldContext.Employees.ToList();
-
-            foreach (var shipper in shippers)
-            {
-                Party party = new Party() { Name = shipper.CompanyName };
-                newContext.Parties.Add(party);
-                newContext.Accountabilities.Add(new Accountability() { Accountable = party, Commissioner = northwind, AccountabilityType = shipperType });
+                //accountabilitytypes
+                AccountabilityType customerType = new AccountabilityType { Description = "Customers" };
+                AccountabilityType employeeType = new AccountabilityType { Description = "Employees" };
+                AccountabilityType shipperType = new AccountabilityType { Description = "Shippers" };
+                AccountabilityType supplierType = new AccountabilityType { Description = "Suppliers" };
+                newContext.AccountabilityTypes.Add(customerType);
+                newContext.AccountabilityTypes.Add(employeeType);
+                newContext.AccountabilityTypes.Add(shipperType);
+                newContext.AccountabilityTypes.Add(supplierType);
+                newContext.SaveChanges();
             }
 
-            foreach (var customer in customers)
+            if (!newContext.Parties.Any())
             {
-                Party party = new Party() { Name = customer.CompanyName };
-                newContext.Parties.Add(party);
-                newContext.Accountabilities.Add(new Accountability() { Accountable = northwind, Commissioner = party, AccountabilityType = customerType });
-            }
+                Party northwind = new Party() { Name = "Northwind" };
+                newContext.Parties.Add(northwind);
+                newContext.SaveChanges();
 
-            foreach (var supplier in suppliers)
-            {
-                Party party = new Party() { Name = supplier.CompanyName };
-                newContext.Parties.Add(party);
-                newContext.Accountabilities.Add(new Accountability() { Accountable = party, Commissioner = northwind, AccountabilityType = supplierType });
-            }
+                foreach (var shipper in oldContext.Shippers.ToList())
+                {
+                    Party party = new Party() { Name = shipper.CompanyName };
+                    newContext.Parties.Add(party);
+                    newContext.Accountabilities.Add(new Accountability() { Accountable = party, Commissioner = northwind, AccountabilityType = shipperType });
+                }
 
-            foreach (var employee in employees)
-            {
-                Party party = new Party() { Name = $"{ employee.FirstName } { employee.LastName }" };
-                newContext.Parties.Add(party);
-                newContext.Accountabilities.Add(new Accountability() { Accountable = party, Commissioner = northwind, AccountabilityType = employeeType });
-            }
+                foreach (var customer in oldContext.Customers.ToList())
+                {
+                    Party party = new Party() { Name = customer.CompanyName };
+                    newContext.Parties.Add(party);
+                    newContext.Accountabilities.Add(new Accountability() { Accountable = northwind, Commissioner = party, AccountabilityType = customerType });
+                }
 
-            newContext.SaveChanges();
+                foreach (var supplier in oldContext.Suppliers.ToList())
+                {
+                    Party party = new Party() { Name = supplier.CompanyName };
+                    newContext.Parties.Add(party);
+                    newContext.Accountabilities.Add(new Accountability() { Accountable = party, Commissioner = northwind, AccountabilityType = supplierType });
+                }
+
+                foreach (var employee in oldContext.Employees.ToList())
+                {
+                    Party party = new Party() { Name = $"{ employee.FirstName } { employee.LastName }" };
+                    newContext.Parties.Add(party);
+                    newContext.Accountabilities.Add(new Accountability() { Accountable = party, Commissioner = northwind, AccountabilityType = employeeType });
+                }
+
+                newContext.SaveChanges();
+            }
         }
     }
 }
