@@ -29,8 +29,10 @@ namespace OOAD_assignment_1
             services.AddDbContext<NORTHWNDContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OldNorthwindConnection")));
 
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("NewNorthwindConnection")));
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("NewNorthwindConnection")));
+                options.UseInMemoryDatabase(Configuration.GetConnectionString("NewNorthwindConnection")));
             //
 
 
@@ -41,6 +43,7 @@ namespace OOAD_assignment_1
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<ITimeProvider, FakeTimeProvider>();
 
             services.AddMvc();
         }

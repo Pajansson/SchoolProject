@@ -9,5 +9,6 @@ namespace OOAD_assignment_1.Services
     {
         void TimeWarp();
         void ResetTime();
+        DateTime GetTime();
     }
 }

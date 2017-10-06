@@ -14,6 +14,11 @@ namespace OOAD_assignment_1.Services
             ResetTime();
         }
 
+        public DateTime GetTime()
+        {
+            return CurrentTime;
+        }
+
         public void ResetTime()
         {
             CurrentTime = DateTime.Now;
