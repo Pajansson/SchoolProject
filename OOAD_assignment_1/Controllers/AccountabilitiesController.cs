@@ -7,25 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OOAD_assignment_1.Data;
 using OOAD_assignment_1.Models;
+using OOAD_assignment_1.Services;
 
 namespace OOAD_assignment_1.Controllers
 {
     public class AccountabilitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITimeProvider _timeProvider;
 
-        public AccountabilitiesController(ApplicationDbContext context)
+        public AccountabilitiesController(ApplicationDbContext context, ITimeProvider timeProvider)
         {
             _context = context;
+            _timeProvider = timeProvider;
         }
 
         // GET: Accountabilities
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Accountabilities
+                .Include(a => a.TimePeriod)
                 .Include(a => a.AccountabilityType)
                 .Include(a => a.Accountable)
-                .Include(a => a.Commissioner);
+                .Include(a => a.Commissioner)
+                .Where(a => a.TimePeriodId == null
+                    || a.TimePeriod.EndTime < _timeProvider.GetTime()
+                    && a.TimePeriod.StartTime > _timeProvider.GetTime());
             return View(await applicationDbContext.ToListAsync());
         }
 
