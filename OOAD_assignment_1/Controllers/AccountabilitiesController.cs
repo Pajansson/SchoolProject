@@ -22,7 +22,10 @@ namespace OOAD_assignment_1.Controllers
         // GET: Accountabilities
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Accountabilities.Include(a => a.AccountabilityType).Include(a => a.Accountable).Include(a => a.Commissioner);
+            var applicationDbContext = _context.Accountabilities
+                .Include(a => a.AccountabilityType)
+                .Include(a => a.Accountable)
+                .Include(a => a.Commissioner);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -50,9 +53,9 @@ namespace OOAD_assignment_1.Controllers
         // GET: Accountabilities/Create
         public IActionResult Create()
         {
-            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "AccountabilityTypeId");
-            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "PartyId");
-            ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "PartyId");
+            ViewData["Description"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "Description");
+            ViewData["CommisionerName"] = new SelectList(_context.Parties, "PartyId", "Name");
+            ViewData["ResponsibleName"] = new SelectList(_context.Parties, "PartyId", "Name");
             return View();
         }
 
@@ -61,7 +64,7 @@ namespace OOAD_assignment_1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommissionerId,AccountableId,AccountabilityTypeId")] Accountability accountability)
+        public async Task<IActionResult> Create([Bind("CommissionerId,Name,AccountableId, Name,AccountabilityTypeId, Description")] Accountability accountability)
         {
             if (ModelState.IsValid)
             {
@@ -69,28 +72,24 @@ namespace OOAD_assignment_1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "AccountabilityTypeId", accountability.AccountabilityTypeId);
-            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "PartyId", accountability.AccountableId);
-            ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "PartyId", accountability.CommissionerId);
+            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "Description", accountability.AccountabilityTypeId, accountability.AccountabilityType.Description);
+            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "Name", accountability.AccountableId, accountability.Accountable.Name);
+            ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "Name", accountability.CommissionerId, accountability.Accountable.Name);
+
             return View(accountability);
         }
 
         // GET: Accountabilities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? typeId, int accountableId, int commisionerId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var accountability = await _context.Accountabilities.SingleOrDefaultAsync(m => m.AccountableId == id);
+            var accountability = await _context.Accountabilities.SingleOrDefaultAsync(m => m.AccountableId == accountableId && m.CommissionerId == commisionerId && m.AccountabilityTypeId == typeId);
             if (accountability == null)
             {
                 return NotFound();
             }
-            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "AccountabilityTypeId", accountability.AccountabilityTypeId);
-            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "PartyId", accountability.AccountableId);
-            ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "PartyId", accountability.CommissionerId);
+            ViewData["Description"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "Description");
+            ViewData["CommisionerName"] = new SelectList(_context.Parties, "PartyId", "Name");
+            ViewData["ResponsibleName"] = new SelectList(_context.Parties, "PartyId", "Name");
             return View(accountability);
         }
 
@@ -99,13 +98,8 @@ namespace OOAD_assignment_1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CommissionerId,AccountableId,AccountabilityTypeId")] Accountability accountability)
+        public async Task<IActionResult> Edit([Bind("CommissionerId,Name,AccountableId, Name,AccountabilityTypeId, Description")] Accountability accountability)
         {
-            if (id != accountability.AccountableId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -126,9 +120,9 @@ namespace OOAD_assignment_1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "AccountabilityTypeId", accountability.AccountabilityTypeId);
-            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "PartyId", accountability.AccountableId);
-            ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "PartyId", accountability.CommissionerId);
+            ViewData["AccountabilityTypeId"] = new SelectList(_context.AccountabilityTypes, "AccountabilityTypeId", "Description", accountability.AccountabilityTypeId, accountability.AccountabilityType.Description);
+            ViewData["AccountableId"] = new SelectList(_context.Parties, "PartyId", "Name", accountability.AccountableId, accountability.Accountable.Name);
+            ViewData["CommissionerId"] = new SelectList(_context.Parties, "PartyId", "Name", accountability.CommissionerId, accountability.Accountable.Name);
             return View(accountability);
         }
 
