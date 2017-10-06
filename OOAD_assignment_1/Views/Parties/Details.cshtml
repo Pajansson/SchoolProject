@@ -1,4 +1,4 @@
-﻿@model OOAD_assignment_1.Models.Party
+﻿@model OOAD_assignment_1.ViewModels.PartyDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -11,14 +11,28 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Party.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Party.Name)
         </dd>
     </dl>
+    <table>
+        @foreach (var acc in Model.Accountabilities)
+        {
+            <tr>
+                <td>
+                    @acc.Accountable.Name
+                </td>
+                <td>
+                    @acc.Commissioner.Name
+                </td>
+            </tr>
+            
+        }
+    </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PartyId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Party.PartyId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
