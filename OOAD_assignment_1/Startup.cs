@@ -30,7 +30,7 @@ namespace OOAD_assignment_1
                 options.UseSqlServer(Configuration.GetConnectionString("OldNorthwindConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("NewNorthwindConnection")));
+                options.UseInMemoryDatabase(Configuration.GetConnectionString("NewNorthwindConnection")));
             //
 
 
@@ -67,7 +67,7 @@ namespace OOAD_assignment_1
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Accountabilities}/{action=Create}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             DbInitialiser.MigrateNorthwindData(oldContext, context);

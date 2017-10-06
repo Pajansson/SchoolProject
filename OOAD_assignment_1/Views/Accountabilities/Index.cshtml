@@ -28,18 +28,24 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AccountabilityType.AccountabilityTypeId)
+                @Html.DisplayFor(modelItem => item.AccountabilityType.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Accountable.PartyId)
+                @Html.DisplayFor(modelItem => item.Accountable.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Commissioner.PartyId)
+                @Html.DisplayFor(modelItem => item.Commissioner.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-action="Edit" 
+                   asp-route-accountableId="@item.AccountableId" 
+                   asp-route-typeId="@item.AccountabilityTypeId" 
+                   asp-route-commisionerId="@item.CommissionerId">
+                    Edit
+                </a>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { id=item.AccountabilityTypeId}) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
 }
